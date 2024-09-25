@@ -90,7 +90,7 @@ def download_and_decrypt(json_data):
     # return blob_url
 
     # Return the decrypted file
-    return decrypted_file
+    return compressed_file
 
 # Пример использования функции
 json_data = {
