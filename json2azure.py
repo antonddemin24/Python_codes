@@ -9,7 +9,7 @@ from azure.storage.blob import BlobServiceClient
 from PIL import Image
 import io
 
-# Функция для проверки первых 10 байтов HMAC-SHA256
+# Function for verifying the first 10 bytes of HMAC-SHA256
 def verify_hmac10(ciphertext, hmac_key, iv, expected_hmac10):
     computed_hmac = hmac.new(hmac_key, iv + ciphertext, hashlib.sha256).digest()
     return computed_hmac[:10] == expected_hmac10
