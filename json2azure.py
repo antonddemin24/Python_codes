@@ -16,13 +16,14 @@ def verify_hmac10(ciphertext, hmac_key, iv, expected_hmac10):
 
 def compress_image(image_data, target_size_kb=300):
     img = Image.open(io.BytesIO(image_data))
-    img_format = img.format
+    img = img.resize((img.width//2, img.height//2), Image.LANCZOS)
+    img_format = 'JPEG'
 
     # Quality ranges from 1 to 95
     quality = 95
     while True:
         compressed_io = io.BytesIO()
-        img.save(compressed_io, format=img_format, quality=quality)
+        img.save(compressed_io, format=img_format, quality=quality, optimize=True, progressive=True)
         compressed_size = compressed_io.tell() / 1024 # Size in KB
 
         if compressed_size < target_size_kb - 10:
@@ -108,6 +109,10 @@ json_data = {
 }
 
 try:
+    # decrypted_file = '/Users/antondemin/Python_codes/camphoto_1254324197.JPG'
+    # with open(decrypted_file, 'rb') as f:
+    #     decrypted_file = f.read()
+    # compressed_file = compress_image(decrypted_file, target_size_kb=300)
     decrypted_file = download_and_decrypt(json_data)
     print("Файл успешно расшифрован и проверен.")
     # Saving the decrypted file
